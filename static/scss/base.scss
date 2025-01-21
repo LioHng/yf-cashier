@@ -1,0 +1,84 @@
+
+// 生成字体大小和行高
+$fontSizeAndLineHeightEnum: (
+  56: 64, 48: 64, 44: 52,
+  40: 48, 36: 44, 34: 42,
+  32: 40, 30: 38, 28: 36, 26: 34,
+  24: 32, 20: 28, 18: 26
+);
+@each $size, $lineHeight in $fontSizeAndLineHeightEnum {
+  .f#{$size} {
+    font-size: #{$size}rpx;
+    line-height: #{$lineHeight}rpx;
+  }
+  .f#{$size}B {
+    font-size: #{$size}rpx;
+    line-height: #{$lineHeight}rpx;
+    font-weight: bold;
+  }
+}
+
+// 生成边距属性
+$distanceList: 0 2 4 6 8 10 12 14 16 20 24 26 28 30 32 40 42 48 64 80 96 128 256;
+$directionAbbr: (
+  "m": "margin",
+  "mt": "margin-top",
+  "mr": "margin-right",
+  "mb": "margin-bottom",
+  "ml": "margin-left",
+  "p": "padding",
+  "pt": "padding-top",
+  "pr": "padding-right",
+  "pb": "padding-bottom",
+  "pl": "padding-left",
+  "br": "border-radius"
+);
+@each $attr,$cssName in $directionAbbr {
+  @each $distance in $distanceList {
+    .#{$attr}#{$distance} {
+      #{$cssName}: #{$distance}rpx !important;
+    }
+  }
+}
+.mtAuto {margin-top: auto;}
+.mrAuto {margin-right: auto;}
+.mbAuto {margin-bottom: auto;}
+.mlAuto {margin-left: auto;}
+
+// 颜色变量 生成对应的类名
+$colors: (
+  "Black": ($Black1,$Black2,$Black3, $Black4, $Black5, $Black6, $Black7),
+  "Orange": ($Orange1, $Orange2, $Orange3, $Orange4),
+  "Yellow": ($Yellow1, $Yellow2, $Yellow3, $Yellow4),
+  "Red": ($Red1, $Red2, $Red3, $Red4),
+  "Green":($Green1, $Green2, $Green3, $Green4),
+  "Blue": ($Blue1, $Blue2, $Blue3, $Blue4),
+  "Mask":($Mask1, $Mask2)
+);
+// 循环遍历颜色和它们的阴影
+@each $colorName, $shades in $colors {
+  @each $colorValue in $shades {
+    $index: index($shades, $colorValue); // 获取颜色值的索引
+    .#{$colorName}#{$index} {
+      color: $colorValue !important;
+    }
+    .bg-#{$colorName}#{$index} {
+      background-color: $colorValue !important;
+    }
+  }
+}
+
+
+// 生成宽高
+$distanceList: 30 32 36 40 52 80 96 104;
+$directionAbbr: (
+  "w-": "width",
+  "h-": "height",
+);
+@each $attr,$cssName in $directionAbbr {
+  @each $distance in $distanceList {
+    .#{$attr}#{$distance} {
+      #{$cssName}: #{$distance}rpx !important;
+    }
+  }
+}

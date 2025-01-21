@@ -52,3 +52,13 @@ export function tansParams(params) {
   }
   return result
 }
+
+/**
+ * 判断是否为手机号
+ * @param phone 传入的字符串
+ * @returns {boolean}
+ */
+export const isPhone = (phone = '') => {
+  const reg = /^1\d{10}$/
+  return reg.test(phone)
+}

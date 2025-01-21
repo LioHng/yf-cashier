@@ -7,6 +7,7 @@ import { setToken, removeToken } from '@/utils/auth'
 const baseUrl = config.baseUrl
 
 const user = {
+  namespaced: true,
   state: {
     id: 0, // 用户编号
     name: storage.get(constant.name),
@@ -16,17 +17,6 @@ const user = {
   },
 
   mutations: {
-    SET_ID: (state, id) => {
-      state.id = id
-    },
-    SET_NAME: (state, name) => {
-      state.name = name
-      storage.set(constant.name, name)
-    },
-    SET_AVATAR: (state, avatar) => {
-      state.avatar = avatar
-      storage.set(constant.avatar, avatar)
-    },
     SET_ROLES: (state, roles) => {
       state.roles = roles
       storage.set(constant.roles, roles)
@@ -39,19 +29,20 @@ const user = {
 
   actions: {
     // 登录
-    Login({ commit }, userInfo) {
-      const username = userInfo.username.trim()
-      const password = userInfo.password
-      const captchaVerification = userInfo.captchaVerification
+    Login({ commit }, params) {
+      console.log('执行了',params);
+      const login = () => Promise.resolve({data:{accessToken: '123456', REFRESH_TOKEN: '78789798'}})
+      login(params).then(res => {
+        // console.log("🚀 ~ login ~ username, password:", username, password)
       return new Promise((resolve, reject) => {
-        login(username, password, captchaVerification).then(res => {
           res = res.data;
           // 设置 token
           setToken(res)
           resolve()
-        }).catch(error => {
-          reject(error)
+          
         })
+      }).catch(error => {
+        reject(error)
       })
     },
 
@@ -69,8 +60,6 @@ const user = {
           } else {
             commit('SET_ROLES', ['ROLE_DEFAULT'])
           }
-          commit('SET_NAME', nickname)
-          commit('SET_AVATAR', avatar)
           resolve(res)
         }).catch(error => {
           reject(error)

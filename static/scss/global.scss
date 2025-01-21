@@ -88,3 +88,16 @@
       }
     }
   }
+
+  .IMG image,.IMG img{
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+  
+  /deep/ .placeholder {
+    height: 40rpx;
+    line-height: 42rpx;
+    font-size: 34rpx;
+    color: #BFBFBF;
+  }

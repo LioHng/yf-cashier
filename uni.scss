@@ -1,64 +1,63 @@
 /**
  * uni-app内置的常用样式变量
  */
-
-/* 行为相关颜色 */
-$uni-color-primary: #007aff;
-$uni-color-success: #4cd964;
-$uni-color-warning: #f0ad4e;
-$uni-color-error: #dd524d;
-
 /* 文字基本颜色 */
-$uni-text-color:#333;//基本色
-$uni-text-color-inverse:#fff;//反色
-$uni-text-color-grey:#999;//辅助灰色，如加载更多的提示信息
-$uni-text-color-placeholder: #808080;
-$uni-text-color-disable:#c0c0c0;
+$uni-text-color: #333; //基本色
 
 /* 背景颜色 */
-$uni-bg-color:#ffffff;
-$uni-bg-color-grey:#f8f8f8;
-$uni-bg-color-hover:#f1f1f1;//点击状态颜色
-$uni-bg-color-mask:rgba(0, 0, 0, 0.4);//遮罩颜色
+$uni-bg-color: #ffffff;
 
 /* 边框颜色 */
-$uni-border-color:#e5e5e5;
-
-/* 尺寸变量 */
-
-/* 文字尺寸 */
-$uni-font-size-sm:12px;
-$uni-font-size-base:14px;
-$uni-font-size-lg:16px;
-
-/* 图片尺寸 */
-$uni-img-size-sm:20px;
-$uni-img-size-base:26px;
-$uni-img-size-lg:40px;
-
-/* Border Radius */
-$uni-border-radius-sm: 2px;
-$uni-border-radius-base: 3px;
-$uni-border-radius-lg: 6px;
-$uni-border-radius-circle: 50%;
-
+$uni-border-color: #e5e5e5;
 /* 水平间距 */
-$uni-spacing-row-sm: 5px;
-$uni-spacing-row-base: 10px;
 $uni-spacing-row-lg: 15px;
 
-/* 垂直间距 */
-$uni-spacing-col-sm: 4px;
-$uni-spacing-col-base: 8px;
-$uni-spacing-col-lg: 12px;
+
 
 /* 透明度 */
 $uni-opacity-disabled: 0.3; // 组件禁用态的透明度
 
-/* 文章场景相关 */
-$uni-color-title: #2C405A; // 文章标题颜色
-$uni-font-size-title:20px;
-$uni-color-subtitle: #555555; // 二级标题颜色
-$uni-font-size-subtitle:26px;
-$uni-color-paragraph: #3F536E; // 文章段落颜色
-$uni-font-size-paragraph:15px;
+
+$Black1: #ffffff;
+$Black2: #F7F7F7;
+$Black3: #ddd;
+$Black4: #bfbfbf;
+$Black5: #8c8c8c;
+$Black6: #595959;
+$Black7: #262626;
+
+$Red1: #FFEFEE;
+$Red2: #FFA19E;
+$Red3: #FF3741;
+$Red4: #B31528;
+
+$Orange1: #FFF6E4;
+$Orange2: #FFC176;
+$Orange3: #ff8010;
+$Orange4: #B34700;
+
+$Yellow1: #FEFEE4;
+$Yellow2: #B34700;
+$Yellow3: #ff8010;
+$Yellow4: #B38000;
+
+$Green1: #F4FEEB;
+$Green2: #A4E479;
+$Green3: #50C41A;
+$Green4: #217804;
+
+$Blue1: #EEF4FF;
+$Blue2: #92BBFF;
+$Blue3: #2B6CFF;
+$Blue4: #0C33B3;
+
+$Mask1:  rgba(0,0,0,0.35);
+$Mask2:  rgba(0,0,0,0.75);
+
+// 安全头部高度、头部高度+刘海屏安全区域
+$headerHeight: 112rpx;
+$headerHeight_safeTop: calc(#{$headerHeight} + var(--status-bar-height));
+
+// tabBar栏高度、tabBar栏+安全区域(h5才需要，app的tabBarHeight为0，因为它采用原生实现)
+$tabBarHeight: 60px;
+$headerHeight_safeBottom:calc(#{$tabBarHeight} + env(safe-area-inset-bottom));

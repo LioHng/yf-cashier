@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "svg": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"
+  },
   "dependencies": {
-    "crypto-js": "^4.0.0"
+    "crypto-js": "^4.0.0",
+    "svgo": "^3.3.2"
   }
 }
