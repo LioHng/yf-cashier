@@ -30,19 +30,14 @@ const user = {
   actions: {
     // 登录
     Login({ commit }, params) {
-      console.log('执行了',params);
-      const login = () => Promise.resolve({data:{accessToken: '123456', REFRESH_TOKEN: '78789798'}})
-      login(params).then(res => {
-        // console.log("🚀 ~ login ~ username, password:", username, password)
       return new Promise((resolve, reject) => {
-          res = res.data;
-          // 设置 token
-          setToken(res)
+        login(params).then(res => {
+          setToken(res.data)
           resolve()
-          
+        }).catch(error => {
+          console.log("🚀 ~ login ~ error:", error)
+          reject(error)
         })
-      }).catch(error => {
-        reject(error)
       })
     },
 
@@ -70,15 +65,11 @@ const user = {
     // 退出系统
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
           commit('SET_ROLES', [])
           commit('SET_PERMISSIONS', [])
           removeToken()
           storage.clean()
           resolve()
-        }).catch(error => {
-          reject(error)
-        })
       })
     }
   }

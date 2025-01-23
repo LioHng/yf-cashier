@@ -1,8 +1,9 @@
 // 应用全局配置
 module.exports = {
-  // baseUrl: 'http://api-dashboard.yudao.iocoder.cn',
-  baseUrl: 'http://localhost:48080',
-  baseApi: '/admin-api',
+  baseUrl: 'http://business.ubox-takeout.cn',
+  // baseUrl: '',
+  // baseApi: '/api',
+  baseApi: '',
   // 应用信息
   appInfo: {
     // 应用名称

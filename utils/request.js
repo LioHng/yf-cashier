@@ -11,8 +11,11 @@ const request = config => {
   // 是否需要设置 token
   const isToken = (config.headers || {}).isToken === false
   config.header = config.header || {}
+  const { contentType } = config.headers || {}
+  const defaultContentType = contentType || `application/x-www-form-urlencoded`
+  config.header = Object.assign({ 'content-type': defaultContentType }, config.header || {})
   if (getAccessToken() && !isToken) {
-    config.header['Authorization'] = 'Bearer ' + getAccessToken()
+    config.header['Token'] = getAccessToken()
   }
   // get请求映射params参数
   if (config.params) {
@@ -50,8 +53,7 @@ const request = config => {
         } else if (code === 500) {
           toast(msg)
           reject('500')
-        } else if (code !== 200) {
-          toast(msg)
+        } else if (code != 200) {
           reject(code)
         }
         resolve(res.data)

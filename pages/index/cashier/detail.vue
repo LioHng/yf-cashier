@@ -3,7 +3,7 @@
     <view class="show_area">
       <view class="top align-center justify-between flex">
         <view class="pay_type">
-          支付方式：xxx支付
+          支付方式：到店收银
         </view>
         <view class="flex align-center">
           <view class="uni-list-cell uni-list-cell-pd flex align-center">
@@ -84,6 +84,8 @@
 </template>
 
 <script>
+import { cashierPay } from '@/api/cashier'
+import CryptoJS from 'crypto-js'
 export default ({
   data() {
     return {
@@ -93,14 +95,11 @@ export default ({
     }
   },
   methods: {
-    onSwitchChange() {
-
-    },
     // 累加
     handleNum(item) {
       if(this.money === '0') {
         this.money = item === 0 ? '0' : `${item}`
-        return
+        return this.finallyResult =  this.money
       }
       this.money = `${this.money}` + item
       if(this.money.indexOf('+') != -1) {
@@ -140,14 +139,25 @@ export default ({
       this.money = `${handleReplaceMoney}`
       this.finallyResult = handleReplaceMoney
     },
-    handleConfirm() {
+    async handleConfirm() {
       uni.scanCode({
-        success: (res) => {
-          console.log('扫描结果:', res.result);
-          uni.showToast({
-            title: '扫描成功: ' + res.result,
-            icon: 'none'
-          });
+        success: async (res) => {
+          try {
+            const params = this.getParams(res.result)
+            const { code } = await cashierPay(params)
+            console.log("🚀 ~ success: ~ code, data :", code )
+            if(code === '200') {
+              this.$modal.msg('支付成功')
+              this.handleClear()
+            } else {
+              this.$modal.msg('支付失败')
+            }
+          } catch(err) {
+            console.log("🚀 ~ handleConfirm ~ err:", err)
+            this.$modal.msg('支付失败')
+          }
+          console.log('cashierPay',cashierPay);
+        
         },
         fail: (err) => {
           console.error('扫描失败:', err);
@@ -157,6 +167,54 @@ export default ({
           });
         }
       });
+    },
+    getParams(userCode){ 
+      const CashierType = {
+        INSTORE_CASHIER: "0", // 到店收银
+        INSITE_CASHIER: "1",  // 现场收银
+        VERIFY_CASHIER: "2"   // 验单收银
+      }
+      const obj = uni.getStorageSync('Cashier_Detail')
+      const { merchantStoreId, equipmentNumber, secretKey } = obj
+      let timestamp = +Date.now()
+      const p = {
+        userCode,
+        merchantStoreId,
+        price: Number(this.finallyResult) * 100,
+        cashRegisterType: CashierType.INSTORE_CASHIER,
+        equipmentNumber
+      }
+      p.sign = this.sign(secretKey,timestamp, p)
+      p.timestamp = timestamp
+      return p
+    },
+    sign(secretKey, timestamp, params) {
+    // 组装参数
+        let message = secretKey;
+        // 先拿到keys
+        let keys = Object.keys(params);
+        // 排序
+        keys.sort();
+        keys.forEach(key => {
+            if (key.startsWith("_")) {
+                return;
+            }
+            message += key;
+            message += params[key];
+        });
+        message += "_timestamp" + timestamp;
+        message += secretKey;
+        // MD5签名
+        return this.getMD5(message);
+    },
+    getMD5(message) {
+         // 计算 MD5 哈希
+        const hash = CryptoJS.MD5(CryptoJS.enc.Utf8.parse(message));
+        // 将哈希结果转换为十六进制字符串
+        const hexString = hash.toString(CryptoJS.enc.Hex);
+        // 确保每个字节的十六进制表示是两位（不足时补零）
+        const formattedHexString = hexString.replace(/(\w{2})/g, '$1').toUpperCase();
+        return formattedHexString;
     }
   }
 })

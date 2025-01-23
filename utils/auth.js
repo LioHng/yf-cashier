@@ -1,4 +1,4 @@
-const AccessTokenKey = 'ACCESS_TOKEN'
+const AccessTokenKey = 'TOKEN'
 const RefreshTokenKey = 'REFRESH_TOKEN'
 
 // ========== Token 相关 ==========
@@ -11,9 +11,9 @@ export function getRefreshToken() {
   return uni.getStorageSync(RefreshTokenKey)
 }
 
-export function setToken(token) {
-  uni.setStorageSync(AccessTokenKey, token.accessToken)
-  uni.setStorageSync(RefreshTokenKey, token.refreshToken)
+export function setToken(data) {
+  uni.setStorageSync(AccessTokenKey, data.Token)
+  // uni.setStorageSync(RefreshTokenKey, data.refreshToken)
 }
 
 export function removeToken() {

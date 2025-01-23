@@ -95,7 +95,7 @@ export default {
       // 登录方式-1：账号密码登录;2：验证码登录`
       loginType: 1,
       form: {
-        account: '13544344694',
+        account: 'sh1',
         phone: '',
         password: '123456',
         vaildCode: ''
@@ -166,11 +166,13 @@ export default {
       const { account, phone, password, vaildCode } = this.form
       const isPwd = this.loginType === 1
       await this.$store.dispatch('user/Login', {
-        loginType: this.loginType,
-        phoneNumber: isPwd ? account : phone,
-        passCode: isPwd ? password : vaildCode
-      }).catch(({ message }) => this.$modal.msg(message || '登录失败'))
-        this.$tab.switchTab('/pages/index')
+        account: isPwd ? account : phone,
+        password: isPwd ? password : vaildCode
+      })
+      .then(() =>  this.$tab.switchTab('/pages/index/index'))
+      .catch(({ message }) => {
+        this.$modal.msg(message || '登录失败')
+      })
     },
     async handleConfirm(picValidCode) {
       const params = {
@@ -191,9 +193,6 @@ export default {
         if (!isPhone(this.form.account)) {
           return toast('请输入正确的手机号')
         }
-        // const { code, message } = await checkAccount({
-        //   phoneNumber: this.form.account
-        // })
 				const { code, message } = await Promise.resolve({code: '200'})
         if (code !== '200') {
           return toast(message)

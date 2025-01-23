@@ -58,7 +58,15 @@
         "template" : "static/index.html",
         "devServer" : {
             "port" : 9090,
-            "https" : false
+            "https" : false, 
+            "proxy" : {
+                "/api" : {
+                    "target" : "http://business.ubox-takeout.cn",
+                    "pathRewrite" : {
+                        "^/api" : "/"
+                    }
+                }
+            }
         },
         "title" : "Yudao-App",
         "router" : {
